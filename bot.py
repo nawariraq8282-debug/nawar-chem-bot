@@ -1,4 +1,3 @@
-
 import os
 import logging
 from telegram import Update
@@ -13,33 +12,33 @@ client = OpenAI(api_key=OPENAI_API_KEY)
 logging.basicConfig(level=logging.INFO)
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await update.message.reply_text(
-        "🔥 أهلاً بك في أكاديمية نوار الذكية\n"
-        "أنا مدربك في كيمياء السادس العلمي.\n\n"
-        "اسألني أي سؤال عن الفصل الأول وسأشرح لك بأسلوب شبابي وحازم 😉"
-    )
+await update.message.reply_text(
+"🔥 أهلاً بك في أكاديمية نوار الذكية\n"
+"أنا مدربك في كيمياء السادس العلمي.\n\n"
+"اسألني أي سؤال عن الفصل الأول وسأشرح لك بأسلوب شبابي وحازم 😉"
+)
 
 async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    user_message = update.message.text
+user_message = update.message.text
 
-    response = client.chat.completions.create(
-        model="gpt-4o-mini",
-        messages=[
-            {"role": "system", "content": "أنت مدرس كيمياء عراقي متخصص بالصف السادس العلمي، تشرح بأسلوب شبابي، حازم، مشوق، ومبسط جداً."},
-            {"role": "user", "content": user_message}
-        ]
-    )
+response = client.chat.completions.create(
+    model="gpt-4o-mini",
+    messages=[
+        {"role": "system", "content": "أنت مدرس كيمياء عراقي متخصص بالصف السادس العلمي وتشرح بأسلوب شبابي حازم ومشوق."},
+        {"role": "user", "content": user_message}
+    ]
+)
 
-    ai_reply = response.choices[0].message.content
-    await update.message.reply_text(ai_reply)
+ai_reply = response.choices[0].message.content
+await update.message.reply_text(ai_reply)
 
 def main():
-    app = ApplicationBuilder().token(TELEGRAM_TOKEN).build()
+app = ApplicationBuilder().token(TELEGRAM_TOKEN).build()
 
-    app.add_handler(CommandHandler("start", start))
-    app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message))
+app.add_handler(CommandHandler("start", start))
+app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message))
 
-    app.run_polling()
+app.run_polling()
 
-if __name__ == "__main__":
-    main()
+if name == "main":
+main()
